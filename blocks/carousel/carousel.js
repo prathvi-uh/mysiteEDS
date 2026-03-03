@@ -31,6 +31,6 @@ export default function decorate(block) {
   setInterval(() => {
     index = (index === slides.length - 1) ? 0 : index + 1;
     updateCarousel();
-  }, 4000);
+  },4000);
 }
  

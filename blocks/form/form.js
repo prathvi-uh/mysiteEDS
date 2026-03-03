@@ -4,7 +4,6 @@ export default async function decorate(block) {
   try {
     const response = await fetch(link.href);
     const data = await response.json();
-    // 🔥 Fix: handle both JSON structures
     const fields = data.data || data;
     const form = document.createElement('form');
     form.classList.add('dynamic-form');
@@ -27,10 +26,7 @@ export default async function decorate(block) {
         input = document.createElement('textarea');
       } else {
         input = document.createElement('input');
-        input.type =
-          field.Type.toLowerCase() === 'mobile'
-            ? 'tel'
-            : field.Type.toLowerCase();
+        input.type = field.Type.toLowerCase() === 'mobile' ? 'tel': field.Type.toLowerCase();
       }
       input.name = field.Name;
       input.placeholder = field.placeholder || '';
@@ -39,8 +35,36 @@ export default async function decorate(block) {
       wrapper.appendChild(input);
       form.appendChild(wrapper);
     });
+    // ✅ Submit Event
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const jsonData = Object.fromEntries(formData.entries());
+      try {
+        const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(jsonData),
+        });
+        if (res.ok) {
+          const message = document.createElement('p');
+          message.textContent = 'Form Submitted Successfully';
+          message.style.color = 'green';
+          form.appendChild(message);
+          form.reset();
+        } else {
+          alert('Submission Failed');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Submission Failed');
+      }
+    });
     block.innerHTML = '';
-      block.appendChild(form);
+    block.appendChild(form);
+
   } catch (error) {
     console.error('Error loading form:', error);
   }
