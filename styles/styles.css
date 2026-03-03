@@ -256,5 +256,24 @@ main .section.highlight {
   padding: 40px 0;
 }
 
-  
+ #welcome-to-adobe{
+  background-color: red;
+ } 
  
+ picture img{
+  width: 500px;
+  height:auto;
+ }
+
+  li{
+  color: blue;
+ }
+
+ .section.dark {
+  background-color: #000;
+  color: white;
+}
+
+.prith{
+  background-color: blue;
+}
