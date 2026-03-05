@@ -36,9 +36,6 @@ export default async function decorate(block) {
       wrapper.appendChild(input);
       form.appendChild(wrapper);
     });
-    const statusMessage = document.createElement('p');
-    statusMessage.style.marginTop = '10px';
-    form.appendChild(statusMessage);
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const formData = new FormData(form);
@@ -52,25 +49,30 @@ export default async function decorate(block) {
           },
         );
         const result = await res.json();
+        const message = document.createElement('p');
+        message.style.marginTop = '10px';
         if (result.status === 'success') {
-          statusMessage.textContent = 'Form Submitted Successfully';
-          statusMessage.style.color = 'green';
+          message.textContent = 'Form submitted successfully';
+          message.style.color = 'green';
           form.reset();
         } else {
-          statusMessage.textContent = 'Submission Failed';
-          statusMessage.style.color = 'red';
+          message.textContent = 'Submission failed';
+          message.style.color = 'red';
         }
-      } catch (error) {
-        statusMessage.textContent = 'Submission Failed';
-        statusMessage.style.color = 'red';
+        form.appendChild(message);
+      } catch {
+        const message = document.createElement('p');
+        message.textContent = 'Submission failed';
+        message.style.color = 'red';
+        message.style.marginTop = '10px';
+        form.appendChild(message);
       }
     });
     block.innerHTML = '';
     block.appendChild(form);
-  } catch (error) {
+  } catch {
     const message = document.createElement('p');
-    message.textContent = 'Form could not be loaded.';
-    message.style.color = 'red';
+    message.textContent = 'Form could not be loaded';
     block.appendChild(message);
   }
 }
