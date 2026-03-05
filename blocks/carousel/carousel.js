@@ -20,17 +20,16 @@ export default function decorate(block) {
     track.style.transform = `translateX(-${index * 100}%)`;
   }
   prevBtn.addEventListener('click', () => {
-    index = (index === 0) ? slides.length - 1 : index - 1;
+    index = index === 0 ? slides.length - 1 : index - 1;
     updateCarousel();
   });
   nextBtn.addEventListener('click', () => {
-    index = (index === slides.length - 1) ? 0 : index + 1;
+    index = index === slides.length - 1 ? 0 : index + 1;
     updateCarousel();
   });
   // Auto slide (optional)
   setInterval(() => {
-    index = (index === slides.length - 1) ? 0 : index + 1;
+    index = index === slides.length - 1 ? 0 : index + 1;
     updateCarousel();
   }, 4000);
 }
- 
