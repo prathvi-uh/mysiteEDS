@@ -1,7 +1,7 @@
 export default function decorate(block) {
-  if (block.children.length < 2) return; 
+  if (block.children.length < 2) return;
   const titleRow = block.children[0];
-  const contentRow = block.children[1]; 
+  const contentRow = block.children[1];
   const wrapper = document.createElement('div');
   wrapper.className = 'hero-wrapper';
   // Title
@@ -26,4 +26,3 @@ export default function decorate(block) {
   block.textContent = '';
   block.append(wrapper);
 }
- 
