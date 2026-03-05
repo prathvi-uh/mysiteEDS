@@ -26,39 +26,45 @@ export default async function decorate(block) {
         input = document.createElement('textarea');
       } else {
         input = document.createElement('input');
-        input.type = field.Type.toLowerCase() === 'mobile' ? 'tel': field.Type.toLowerCase();
+        input.type =
+          field.Type.toLowerCase() === 'mobile'
+            ? 'tel'
+            : field.Type.toLowerCase();
       }
-      input.name = field.Name;
+      input.name = field.Name.toLowerCase(); // important for sheet match
       input.placeholder = field.placeholder || '';
       input.required = true;
       wrapper.appendChild(label);
       wrapper.appendChild(input);
       form.appendChild(wrapper);
     });
-    // ✅ Submit Event
+    // ✅ FORM SUBMIT HANDLER
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const formData = new FormData(form);
       const jsonData = Object.fromEntries(formData.entries());
       try {
-        const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(jsonData),
-        });
-        if (res.ok) {
+        const response = await fetch(
+          'https://script.google.com/macros/s/AKfycbylsTeHBa5ncTLOqot0hwpnfWwwaLPD_dmExm9q8LdWdS8QXB_n8seIURyXuzeMV1Qn/exec',
+          {
+            method: 'POST',
+            body: JSON.stringify(jsonData),
+          }
+        );
+        const result = await response.json();
+        if (result.status === 'success') {
           const message = document.createElement('p');
           message.textContent = 'Form Submitted Successfully';
           message.style.color = 'green';
+          message.style.marginTop = '10px';
           form.appendChild(message);
           form.reset();
         } else {
           alert('Submission Failed');
         }
-      } catch (err) {
-        console.error(err);
+
+      } catch (error) {
+        console.error(error);
         alert('Submission Failed');
       }
     });
