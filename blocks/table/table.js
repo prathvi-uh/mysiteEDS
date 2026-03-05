@@ -34,4 +34,3 @@ export default async function decorate(block) {
   table.appendChild(tbody);
   block.appendChild(table);
 }
- 

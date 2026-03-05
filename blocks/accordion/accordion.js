@@ -10,7 +10,7 @@ export default function decorate(block) {
       content.style.display = 'none';
       header.addEventListener('click', () => {
         const isOpen = content.style.display === 'block';
-       // close all
+        // close all
         block.querySelectorAll('.accordion-content').forEach((c) => {
           c.style.display = 'none';
         });
