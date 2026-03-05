@@ -13,7 +13,6 @@ export default async function decorate(block) {
     fields.forEach((field) => {
       if (!field.Type) return;
 
-      // Submit button
       if (field.Type.toLowerCase() === 'submit') {
         const button = document.createElement('button');
         button.type = 'submit';
@@ -48,7 +47,6 @@ export default async function decorate(block) {
       form.appendChild(wrapper);
     });
 
-    // FORM SUBMIT HANDLER
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -66,25 +64,34 @@ export default async function decorate(block) {
 
         const result = await res.json();
 
+        const message = document.createElement('p');
+        message.style.marginTop = '10px';
+
         if (result.status === 'success') {
-          const message = document.createElement('p');
           message.textContent = 'Form Submitted Successfully';
           message.style.color = 'green';
-          message.style.marginTop = '10px';
-          form.appendChild(message);
           form.reset();
         } else {
-          alert('Submission Failed');
+          message.textContent = 'Submission Failed';
+          message.style.color = 'red';
         }
-      } catch (error) {
-        console.error(error);
-        alert('Submission Failed');
+
+        form.appendChild(message);
+      } catch (e) {
+        const errorMsg = document.createElement('p');
+        errorMsg.textContent = 'Submission Failed';
+        errorMsg.style.color = 'red';
+        errorMsg.style.marginTop = '10px';
+        form.appendChild(errorMsg);
       }
     });
 
     block.innerHTML = '';
     block.appendChild(form);
-  } catch (error) {
-    console.error('Error loading form:', error);
+  } catch (e) {
+    const errorMsg = document.createElement('p');
+    errorMsg.textContent = 'Form could not be loaded';
+    errorMsg.style.color = 'red';
+    block.appendChild(errorMsg);
   }
 }
