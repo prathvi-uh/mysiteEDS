@@ -1,0 +1,4 @@
+sitemaps:
+  default:
+    origin: https://main--mysiteeds--prathvi-uh.aem.live
+    source: /query-index.json

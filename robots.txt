@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://main--mysiteeds--prathvi-uh.aem.live/sitemap.xml
